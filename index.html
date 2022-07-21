@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>The Library</title>
+</head>
+
+<body>
+    <header>
+        <div id="header-left">
+            <h1><a href="https://www.github.com/tomcodedthis" target="_blank">@tomcodedthis</a> | Library</h1>
+        </div>
+        <div id="header-right">
+            <button id="add-btn" class="show-hide-form">Add Book +</button>
+            <img src="./images/light-mode_w.png" alt="Light-Mode" id="color-mode">
+        </div>
+    </header>
+
+    <main>
+        <div id="shelf" class="shelf">
+            
+        </div>
+
+        <div id="form-cont"  class="add-form">
+            <div class="form-header">
+                <h1 class="form-title">New Book</h1>
+                <button class="close-form form-btn show-hide-form" id="close-form">X</button>
+            </div>
+
+            <form method="post" class="form-main" id="book-form" name="add-book">
+                <fieldset class="text-fieldset" id="form-book-title">
+                    <label for="title" class="fieldset-left">Title</label>
+                    <input type="text" name="title" required>
+                </fieldset>
+    
+                <fieldset class="text-fieldset">
+                    <label for="author" class="fieldset-left">Author</label>
+                    <input type="text" name="author">
+                </fieldset>
+    
+                <fieldset>
+                    <label for="pages" class="fieldset-left">Pages</label>
+                    <input type="number" name="pages" value="0" id="pages-input">
+                </fieldset>
+                
+                <fieldset id="radio-fieldset">
+                    <div class="radio-cont">
+                        <label for="read">Read</label>
+                        <input type="radio" name="read-status" id="read" checked value="Read">
+                    </div>
+
+                    <div class="radio-cont">
+                        <label for="not-read">Not Read</label>
+                        <input type="radio" name="read-status" id="not-read" value="Not-Read">
+                    </div>
+                </fieldset>
+
+                <input type="submit" value="Add Book" id="add-book-btn" class="form-btn">
+                <h3 id="added-message">Successfully Added!</h3>
+            </form>
+        </div>
+    </main>
+</body>
+
+<script src="./script.js"></script>
+</html>
