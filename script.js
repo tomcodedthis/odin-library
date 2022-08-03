@@ -1,9 +1,3 @@
-let library = [
-    
-];
-let bookIndex = 5;
-/*{title: 'The Hobbit', author: 'J.R.R Tolkien', pages: 420, read: 'Not-Read'}*/
-
 const showHideFormBtns = document.querySelectorAll('.show-hide-form');
 const formCont = document.querySelector('#form-cont');
 const shelf = document.querySelector('#shelf');
@@ -12,16 +6,35 @@ const bookForm = document.querySelector('#book-form');
 const addedMessage = document.querySelector('#added-message');
 const colorMode = document.querySelector('#color-mode');
 
-function Book(title, author, pages, read) {
+let library = [
+    {   title: 'Book Title', 
+        author: 'Author',
+        pages: 100,
+        read: 'Not-Read' }
+];
+let bookIndex = 5;
 
-    this.title = title
-    this.author = author
-    this.pages = pages
-    this.read = read
+class Book {
+    
+    constructor(title, author, pages, read) {
 
-    library.push({title: `${this.title}`, author: `${this.author}`, pages: `${this.pages}`, read: `${this.read}`});
+        this.title = title
+        this.author = author
+        this.pages = pages
+        this.read = read
 
-    displayBooks();
+        library.push({
+
+            title: `${this.title}`, 
+            author: `${this.author}`, 
+            pages: `${this.pages}`, 
+            read: `${this.read}`
+
+        });
+
+        displayBooks();
+
+    }
 
 }
 
@@ -72,17 +85,21 @@ function displayBooks() {
         const index = library.indexOf(book);
 
         const bookDiv = document.createElement('div');
-            bookDiv.classList.add('book');
+            bookDiv.classList.add('book', 'grid');
+
+        const topLine = document.createElement('div');
+            topLine.classList.add('line');
+            topLine.id = 'top-line';
 
         const header = document.createElement('div');
-            header.classList.add('book-header', 'book-conts');
+            header.classList.add('book-header', 'book-conts', 'flex');
 
         const title = document.createElement('h2');
             title.classList.add('book-title');
             title.innerText = `${book.title}`;
 
         const main = document.createElement('div');
-            main.classList.add('book-main', 'book-conts');
+            main.classList.add('book-main', 'book-conts', 'flex');
 
         const author = document.createElement('h3');
             author.classList.add('book-author');
@@ -114,13 +131,11 @@ function displayBooks() {
         header.append(title);
         main.append(author, length, read);
         footer.append(edit, remove);
-        bookDiv.append(header, main, footer);
+        bookDiv.append(topLine, header, main, footer);
         shelf.append(bookDiv);
     }
     
 }
-
-displayBooks();
 
 function showHideForm(e) {
 
@@ -136,33 +151,7 @@ function showHideForm(e) {
     
 }
 
-function changeMode(e) {
-
-    if (e.target.alt == 'Light-Mode') {
-        
-        e.target.src = './images/dark-mode.png';
-        e.target.alt = 'Dark-Mode';
-
-        document.documentElement.style.setProperty('--black', '#fefefe');
-        document.documentElement.style.setProperty('--white', '#111111');
-        document.documentElement.style.setProperty('--grey', 'rgba(1, 1, 1, 0.07)');
-        document.documentElement.style.setProperty('--check', 'url(./images/check.png) no-repeat 50% center');
-
-    } else {
-
-        e.target.src = './images/light-mode_w.png';
-        e.target.alt = 'Light-Mode';
-
-        document.documentElement.style.setProperty('--black', '#111111');
-        document.documentElement.style.setProperty('--white', '#fefefe');
-        document.documentElement.style.setProperty('--grey', 'rgba(256, 256, 256, 0.07)');
-        document.documentElement.style.setProperty('--check', 'url(./images/check_w.png) no-repeat 50% center');
-
-    }
-
-}
-
-function nameForm() {
+function editForm() {
 
     if (bookForm.name == 'edit-book') {        // Changes text/values for book edit
 
@@ -185,6 +174,35 @@ function nameForm() {
 
 }
 
+function changeColor(e) {
+
+    if (e.target.alt == 'Light-Mode') {
+        
+        e.target.src = './images/dark-mode.png';
+        e.target.alt = 'Dark-Mode';
+        e.target.classList.add('rotate');
+        setTimeout(() => { e.target.classList.remove('rotate') }, 700);
+
+        document.documentElement.style.setProperty('--brown-1', '#fefefe');
+        document.documentElement.style.setProperty('--white', '#111111');
+        document.documentElement.style.setProperty('--grey', 'rgba(1, 1, 1, 0.06)');
+        document.documentElement.style.setProperty('--check', 'url(./images/check.png) no-repeat 50% center');
+
+    } else {
+
+        e.target.src = './images/light-mode_w.png';
+        e.target.alt = 'Light-Mode';
+        e.target.classList.add('rotate');
+        setTimeout(() => { e.target.classList.remove('rotate') }, 500);
+
+        document.documentElement.style.setProperty('--brown-1', '#26100d');
+        document.documentElement.style.setProperty('--white', '#fefefe');
+        document.documentElement.style.setProperty('--grey', 'rgba(256, 256, 256, 0.06)');
+        document.documentElement.style.setProperty('--check', 'url(./images/check_w.png) no-repeat 50% center');
+    }
+
+}
+
 document.addEventListener('click', (e) => {
 
     if (e.target.name == 'remove') {
@@ -199,7 +217,7 @@ document.addEventListener('click', (e) => {
         bookIndex = e.target.value;
         bookForm.name = 'edit-book';
 
-        nameForm();
+        editForm();
         showHideForm(e);
 
     } else if (e.target.id == 'add-btn' || e.target.id == 'close-form') {
@@ -207,10 +225,12 @@ document.addEventListener('click', (e) => {
         bookForm.name = 'add-book';
 
         showHideForm(e);
-        nameForm();
+        editForm();
 
     }
 
 });
 bookForm.addEventListener('submit', processBook);
-colorMode.addEventListener('click', changeMode);
+colorMode.addEventListener('click', changeColor);
+
+displayBooks();
