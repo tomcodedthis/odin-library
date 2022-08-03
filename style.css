@@ -1,7 +1,14 @@
+/*----------
+Global Attributes
+----------*/
 :root {
-    --black: #111111;
     --white: #fefefe;
-    --grey: rgba(256, 256, 256, 0.07);
+    --static-white: #fefefe;
+    --grey: rgba(256, 256, 256, 0.06);
+    --brown-1: #26100d;
+    --brown-2: #372413;
+    --brown-3: #513924;
+    --light-brown: #EDDFB3;
     --check: url(./images/check_w.png) no-repeat 50% center;
     font-size: 18px;
 }
@@ -14,37 +21,44 @@
 body {
     width: 100vw;
     height: 100vh;
-    background-color: var(--black);
+    background-color: var(--brown-1);
     display: grid;
     grid-template-rows: 1fr 8fr;
 }
 
+/*----------
+Typography
+----------*/
+h1 {
+    font-size: 2.2rem;
+    font-weight: bolder;
+}
+h2 {
+    font-size: 2rem;
+}
+h3 {
+    font-size: 1.6rem;
+    font-weight: normal;
+    color: var(--static-white);
+}
+
+/*----------
+Page Sections
+----------*/
 header {
     width: 100%;
     height: clamp(100px, 100%, 300px);
-    box-shadow: 0 0 0 5px var(--white);
     background: var(--grey);
-    display: flex;
     justify-content: space-between;
-    align-items: center;
 }
     #header-left {
-        display: flex;
         justify-content: left;
         align-items: flex-end;
         gap: 10px;
         margin: 0 0 0 50px;
     }
-        #header-left a {
-            font-size: 1.8rem;
-            text-decoration: none;
-            border: solid var(--white);
-            border-width: 0 0 3px 0;
-        }
     #header-right {
-        display: flex;
         justify-content: right;
-        align-items: center;
         gap: 50px;
         margin: 0 50px 0 0;
     }
@@ -54,61 +68,97 @@ header {
             font-size: 1.8rem;
             font-weight: bold;
         }
+        #color-mode {
+            transition: all 400ms;
+        }
+            #color-mode:hover {
+                transform: rotate(-10deg);
+            }
+            .rotate {
+                animation: changeColor 500ms cubic-bezier(.64,0,.41,1) 1;
+            }
 
 main {
     align-self: flex-start;
     margin-top: 100px;
-    display: flex;
     justify-content: center;
-    align-items: center;
 }
     .shelf {
-        width: 100%;
-        display: grid;
-        grid-template-columns: repeat(auto-fill, 325px);
-        justify-items: center;
         align-self: center;
+        width: 100%;
+        grid-template-columns: repeat(auto-fill, 325px);
         gap: 50px;
-        box-shadow: 0 0 0 5px var(--white);
-        background-color: var(--grey);
         padding: 50px;
     }
         .book {
             width: 250px;
             height: 300px;
-            border: 5px solid var(--white);
-            border-radius: 20px;
-            display: grid;
-            grid-template-rows: 1fr 2fr 1fr;
-            justify-items: center;
+            grid-template-rows: 1px 1fr 2fr 1fr;
             text-align: center;
-            padding: 30px;
-            background-color: var(--black);
+            padding: 20px;
+            background-color: var(--brown-3);
+            border: 15px solid var(--brown-2);
+            border-radius: 28px;
+            box-shadow: 6px -6px 0 -4px var(--light-brown),
+            9px -9px 0 -5px var(--brown-2),
+            12px -13px 0 -6px var(--light-brown),
+            15px -16px 0 -7px var(--brown-2),
+            18px -20px 0 -8px var(--light-brown),
+            26px -26px 0 0 var(--brown-2)
+            ;
         }
+        /*-----Book Design-----*/
+            .line {
+                position: relative;
+                width: 50px;
+                height: 15px;
+                transform: rotate(-45deg);
+                background-color: var(--brown-2);
+                border-radius: 5px;
+            }
+                #top-line {
+                    top: -45px;
+                    left: -131px;
+                }
             .book-conts {
-                display: flex;
                 flex-direction: column;
                 justify-content: center;
-                align-items: center;
+                color: var(--static-white);
             }
             .book-title {
                 font-size: 2.2rem;
+                color: var(--static-white);
             }
             .book-main {
-                justify-content: space-around;
+                justify-content: center;
+                gap: 20px;
+                color: var(--static-white);
             }
             .book-footer {
-                flex-direction: row;
-                justify-content: center;
-                align-items: flex-end;
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                align-content: flex-end;
                 gap: 25px;
-                width: 80%;
+                width: 100%;
             }
                 .book-btns {
                     font-size: 1.2rem;
                     padding: 5px 15px;
+                    color: var(--static-white);
+                    background-color: var(--brown-2);
+                    border: 7px solid;
+                    border-color: var(--brown-2);
+                    appearance: none;
+                    cursor: pointer;
+                    font-weight: 600;
+                    border-radius: 15px;
+                    transition: 600ms;
                 }
-    
+                    .book-btns:hover {
+                        color: var(--static-white);
+                        background-color: var(--brown-3);
+                        border-color: var(--brown-2);
+                    }
     #form-cont {
         display: none;
     }
@@ -117,11 +167,10 @@ main {
             top: clamp(150px, 15%, 500px);
             width: clamp(550px, 60%, 1000px);
             height: clamp(650px, 60%, 1000px);
-            background-color: var(--black);
+            background-color: var(--brown-1);
             border: 5px solid var(--white);
             border-radius: 20px;
-            box-shadow: 0 0 500px 100px var(--black);
-            display: grid;
+            box-shadow: 0 0 500px 100px var(--brown-1);
             grid-template-rows: 1fr 4fr;
             gap: 20px;
             padding: 20px;
@@ -129,9 +178,7 @@ main {
             .form-header {
                 width: 100%;
                 height: 100%;
-                display: grid;
                 grid-template-columns: 1fr 4fr 1fr;
-                justify-items: center;
                 align-items: center;
             }
                 .form-title {
@@ -147,15 +194,11 @@ main {
             .form-main {
                 width: 100%;
                 height: 90%;
-                display: grid;
                 grid-template-rows: repeat(5, 1fr);
-                justify-items: center;
                 align-items: center;
             }
                 .add-form fieldset {
-                    display: flex;
                     justify-content: center;
-                    align-items: center;
                     gap: 40px;
                     border: none;
                 }
@@ -165,13 +208,13 @@ main {
                     .add-form fieldset input {
                         border: 3px solid var(--white);
                         border-radius: 10px;
-                        color: var(--black);
+                        color: var(--brown-1);
                         font-size: 1.6rem;
                         padding: 10px;
                     }
                         .add-form fieldset input:focus {
                             outline: none;
-                            box-shadow: 0 0 0 2px var(--black),
+                            box-shadow: 0 0 0 2px var(--brown-1),
                             0 0 0 4px var(--white);
                         }
                         .add-form input[type=text] {
@@ -199,14 +242,11 @@ main {
                         justify-self: right;
                     }
                     #radio-fieldset {
-                        display: flex;
                         justify-content: center;
                         width: 100%;
                     }
                         .radio-cont {
-                            display: flex;
                             justify-content: center;
-                            align-items: center;
                             gap: 15px;
                         }
                         .add-form input[type=radio] {
@@ -228,31 +268,52 @@ main {
                     display: none;
                     margin-top: 25px;
                 }
+/*----------
+Components
+----------*/
+a {
+    font-size: 1.8rem;
+    text-decoration: none;
+    border: solid var(--white);
+    border-width: 0 0 3px 0;
+}
 
-button, .form-btn {
+/*----------
+Keyframes
+----------*/
+@keyframes changeColor {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/*----------
+Re-usable classes
+----------*/
+.flex {
+    display: flex;
+    align-items: center;
+}
+.grid {
+    display: grid;
+    justify-items: center;
+}
+.form-btn {
     appearance: none;
     cursor: pointer;
     font-weight: 600;
-    background-color: var(--white);
-    color: var(--black);
-    border: 5px solid var(--white);
-    border-radius: 5px;
+    border: 5px solid;
+    border-radius: 15px;
     transition: 600ms;
+    background-color: var(--white);
+    color: var(--brown-1);
+    border: 5px solid var(--grey);
 }
-    button:hover, .form-btn:hover {
+    .form-btn:hover {
         border-color: var(--white);
-        background-color: var(--black);
+        background-color: var(--brown-1);
         color: var(--white);
     }
-
-h1 {
-    font-size: 2.2rem;
-    font-weight: bolder;
-}
-h2 {
-    font-size: 2rem;
-}
-h3 {
-    font-size: 1.6rem;
-    font-weight: normal;
-}
